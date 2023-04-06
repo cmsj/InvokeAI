@@ -27,20 +27,14 @@ jobs:
       fail-fast: false
       matrix:
         flavor:
-          - rocm
           - cuda
-          - cpu
         include:
-          - flavor: rocm
-            pip-extra-index-url: 'https://download.pytorch.org/whl/rocm5.2'
           - flavor: cuda
             pip-extra-index-url: ''
-          - flavor: cpu
-            pip-extra-index-url: 'https://download.pytorch.org/whl/cpu'
     runs-on: ubuntu-latest
     name: ${{ matrix.flavor }}
     env:
-      PLATFORMS: 'linux/amd64,linux/arm64'
+      PLATFORMS: 'linux/amd64'
       DOCKERFILE: 'docker/Dockerfile'
     steps:
       - name: Checkout
@@ -95,7 +89,7 @@ jobs:
           context: .
           file: ${{ env.DOCKERFILE }}
           platforms: ${{ env.PLATFORMS }}
-          push: ${{ github.ref == 'refs/heads/main' || github.ref_type == 'tag' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: PIP_EXTRA_INDEX_URL=${{ matrix.pip-extra-index-url }}
