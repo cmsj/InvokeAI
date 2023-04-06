@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG PYTHON_VERSION=3.9
+ARG PYTHON_VERSION=3.10
 ##################
 ##  base image  ##
 ##################
@@ -49,7 +49,7 @@ RUN \
     --no-install-recommends \
     build-essential=12.9 \
     gcc=4:10.2.* \
-    python3-dev=3.9.*
+    python3-dev=3.10.*
 
 # Prepare pip for buildkit cache
 ARG PIP_CACHE_DIR=/var/cache/buildkit/pip
